@@ -1,7 +1,9 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
     @Test
@@ -28,5 +30,17 @@ public class ValidatorTest {
         assertFalse(schema.minLength(5).isValid("hi"));
         assertTrue(schema.contains("hex").isValid("what does the fox say"));
         assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
+    }
+
+    @Test
+    public void testNumberSchema() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number().required().positive().range(5, 10);
+
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(4));
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid(11));
     }
 }
