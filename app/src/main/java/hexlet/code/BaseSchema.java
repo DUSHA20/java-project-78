@@ -7,6 +7,5 @@ public abstract class BaseSchema<T> {
         this.required = true;
         return this;
     }
-
     public abstract boolean isValid(T data);
 }
