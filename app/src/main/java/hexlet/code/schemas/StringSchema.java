@@ -21,7 +21,7 @@ public class StringSchema extends BaseSchema<String> implements StringOperations
         }
 
         return data != null && data.length() >= minLength && (contains.isEmpty() || data.contains(contains));
-    }
+    } // может быть надо будет его исправить
 
     @Override
     public StringSchema minLength(int minLength) {
