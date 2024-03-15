@@ -2,7 +2,7 @@ package hexlet.code.schemas;
 
 import hexlet.code.BaseSchema;
 
-public class NumberSchema extends BaseSchema<Integer> {
+public class NumberSchema extends BaseSchema {
     private int min = Integer.MIN_VALUE;
     private int max = Integer.MAX_VALUE;
 
@@ -24,10 +24,11 @@ public class NumberSchema extends BaseSchema<Integer> {
     }
 
     @Override
-    public boolean isValid(Integer data) {
-        if (required && data == null) {
+    public boolean isValid(Object data) {
+        if (required && !(data instanceof Integer)) {
             return false;
         }
-        return data != null && data >= min && data <= max;
+        Integer intData = (Integer) data;
+        return intData != null && intData >= min && intData <= max;
     }
 }
