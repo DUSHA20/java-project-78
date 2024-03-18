@@ -1,9 +1,9 @@
 package hexlet.code;
 
+import hexlet.code.schemas.BaseSchema;
 import hexlet.code.schemas.MapSchema;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
-import hexlet.code.schemas.BaseSchema;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -13,29 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
-
-    @Test
-    void stringSchemaTest() {
-        Validator v = new Validator();
-        StringSchema schema = v.string();
-
-        assertTrue(schema.isValid(""));
-        assertTrue(schema.isValid(null));
-
-        schema.required();
-
-        assertFalse(schema.isValid(""));
-        assertFalse(schema.isValid(null));
-        assertTrue(schema.isValid("what does the fox say"));
-        assertTrue(schema.isValid("hexlet"));
-
-        assertTrue(schema.contains("wh").isValid("what does the fox say"));
-        assertTrue(schema.contains("what").isValid("what does the fox say"));
-
-        assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
-        assertFalse(schema.isValid("what does the fox say"));
-
-    }
 
     @Test
     void numberSchemaTest() {
@@ -60,6 +37,29 @@ public class ValidatorTest {
         assertFalse(schema.isValid(4));
         assertFalse(schema.isValid(11));
         assertFalse(schema.isValid("x"));
+
+    }
+
+    @Test
+    void stringSchemaTest() {
+        Validator v = new Validator();
+        StringSchema schema = v.string();
+
+        assertTrue(schema.isValid(""));
+        assertTrue(schema.isValid(null));
+
+        schema.required();
+
+        assertFalse(schema.isValid(""));
+        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid("what does the fox say"));
+        assertTrue(schema.isValid("hexlet"));
+
+        assertTrue(schema.contains("wh").isValid("what does the fox say"));
+        assertTrue(schema.contains("what").isValid("what does the fox say"));
+
+        assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
+        assertFalse(schema.isValid("what does the fox say"));
 
     }
 
@@ -116,3 +116,4 @@ public class ValidatorTest {
     }
 
 }
+

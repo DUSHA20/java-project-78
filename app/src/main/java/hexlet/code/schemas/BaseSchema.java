@@ -2,24 +2,25 @@ package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public abstract class BaseSchema {
 
     private boolean required = false;
 
-    private List<Function<Object, Boolean>> checks = new ArrayList<>();
+    private List<Predicate<Object>> predicates = new ArrayList<>();
 
     public boolean isValid(Object object) {
+
         if (checkIfNull(object)) {
             return !required;
         } else {
-            return checks.stream().allMatch(check -> check.apply(object));
+            return predicates.stream().allMatch(predicate -> predicate.test(object));
         }
     }
 
-    public void addCheck(Function<Object, Boolean> check) {
-        checks.add(check);
+    public void addPredicate(Predicate<Object> predicate) {
+        predicates.add(predicate);
     }
 
     public boolean checkIfNull(Object object) {
@@ -31,3 +32,4 @@ public abstract class BaseSchema {
     }
 
 }
+
