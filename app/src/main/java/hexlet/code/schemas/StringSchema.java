@@ -1,36 +1,26 @@
 package hexlet.code.schemas;
 
 import hexlet.code.BaseSchema;
-import hexlet.code.StringOperations;
 
-public class StringSchema extends BaseSchema implements StringOperations  {
-    private int minLength = 0;
-    private String contains = "";
+public final class StringSchema extends BaseSchema {
 
-    @Override
     public StringSchema required() {
-        super.required();
+        setRequired(true);
         return this;
     }
 
-    @Override
-    public boolean isValid(Object data) {
-        if (required && (data == null || !(data instanceof String))) {
-            return false;
-        }
-
-        String strData = (String) data;
-
-        return strData != null && strData.length() >= minLength && (contains.isEmpty() || strData.contains(contains));
-    }
-
     public StringSchema minLength(int minLength) {
-        this.minLength = minLength;
+        addCheck(s -> s instanceof String && ((String) s).length() >= minLength);
         return this;
     }
 
     public StringSchema contains(String contains) {
-        this.contains = contains;
+        addCheck(s -> s instanceof String && ((String) s).contains(contains));
         return this;
+    }
+
+    @Override
+    public boolean checkIfNull(Object object) {
+        return object == null || ((String) object).isEmpty();
     }
 }

@@ -1,12 +1,33 @@
 package hexlet.code;
 
-public abstract class BaseSchema {
-    protected boolean required = false;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
-    public BaseSchema required() {
-        this.required = true;
-        return this;
+public abstract class BaseSchema {
+
+    private boolean required = false;
+
+    private List<Function<Object, Boolean>> checks = new ArrayList<>();
+
+    public boolean isValid(Object object) {
+        if (checkIfNull(object)) {
+            return !required;
+        } else {
+            return checks.stream().allMatch(check -> check.apply(object));
+        }
     }
 
-    public abstract boolean isValid(Object data);
+    public void addCheck(Function<Object, Boolean> check) {
+        checks.add(check);
+    }
+
+    public boolean checkIfNull(Object object) {
+        return object == null;
+    }
+
+    public void setRequired(boolean req) {
+        this.required = req;
+    }
+
 }

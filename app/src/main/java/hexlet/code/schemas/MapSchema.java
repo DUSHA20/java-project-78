@@ -1,44 +1,48 @@
 package hexlet.code.schemas;
 
 import hexlet.code.BaseSchema;
+import java.util.HashMap;
 import java.util.Map;
 
-public class MapSchema extends BaseSchema {
-    private Integer size;
-    private Map<String, BaseSchema> shape;
+public final class MapSchema extends BaseSchema {
 
-    public MapSchema sizeof(int size) {
-        this.size = size;
+    private Map<String, BaseSchema> schemas = new HashMap<>();
+
+    public MapSchema required() {
+        setRequired(true);
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema> shape) {
-        this.shape = shape;
+    public MapSchema sizeof(int x) {
+        addCheck(m -> ((Map) m).size() == x);
         return this;
     }
 
-    @Override
-    public boolean isValid(Object data) {
-        if (required && (data == null || !(data instanceof Map) || ((Map<?, ?>) data).isEmpty())) {
-            return false;
-        }
+    public MapSchema shape(Map<String, BaseSchema> innerSchemas) {
+        this.schemas = innerSchemas;
+        return this;
+    }
 
-        Map<?, ?> mapData = (Map<?, ?>) data;
-
-        if (size != null && mapData.size() != size) {
-            return false;
-        }
-
-        if (shape != null) {
-            for (Map.Entry<String, BaseSchema> entry : shape.entrySet()) {
-                String key = entry.getKey();
-                BaseSchema nestedSchema = entry.getValue();
-                if (!mapData.containsKey(key) || !nestedSchema.isValid(mapData.get(key))) {
+    public boolean innerCheck(Map<Object, Object> objectMap) {
+        for (Map.Entry entry : objectMap.entrySet()) {
+            var key = entry.getKey();
+            var value = entry.getValue();
+            if (schemas.containsKey(key)) {
+                BaseSchema sce = schemas.get(key);
+                if (!sce.isValid(value)) {
                     return false;
                 }
             }
         }
-
         return true;
+    }
+
+    @Override
+    public boolean isValid(Object object) {
+        if (object != null && !schemas.isEmpty()) {
+            return innerCheck((Map) object);
+        } else {
+            return super.isValid(object);
+        }
     }
 }
