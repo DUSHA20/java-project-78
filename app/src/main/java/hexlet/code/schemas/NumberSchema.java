@@ -1,7 +1,5 @@
 package hexlet.code.schemas;
 
-import hexlet.code.BaseSchema;
-
 public final class NumberSchema extends BaseSchema {
 
     public NumberSchema required() {
