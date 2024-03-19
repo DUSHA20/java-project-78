@@ -86,8 +86,8 @@ public class ValidatorTest {
         MapSchema<String, Object> schema = v.map();
         Map<String, BaseSchema<Object>> schemas = new HashMap<>();
 
-        BaseSchema<Object> firstNameSchema = v.string().required().containsSubstring("ya");
-        BaseSchema<Object> lastNameSchema = v.string().required().containsSubstring("ov");
+        BaseSchema<Object> firstNameSchema = v.string().required().contains("ya");
+        BaseSchema<Object> lastNameSchema = v.string().required().contains("ov");
         BaseSchema<Object> ageSchema = v.number().required();
 
         schemas.put("firstName", firstNameSchema);
