@@ -1,29 +1,31 @@
 package hexlet.code.schemas;
 
+import java.util.function.Predicate;
+
 public final class StringSchema extends BaseSchema {
 
     public StringSchema() {
-        super();
-        addPredicate(s -> s instanceof String);
-    }
-
-    public StringSchema required() {
-        setRequired(true);
-        return this;
-    }
-
-    public StringSchema minLength(int minLength) {
-        addPredicate(s -> ((String) s).length() >= minLength);
-        return this;
-    }
-
-    public StringSchema contains(String contains) {
-        addPredicate(s -> ((String) s).contains(contains));
-        return this;
+        addPredicate("isRequired", o -> o instanceof String && !(o.equals("")));
     }
 
     @Override
-    protected boolean isEmptyValue(Object object) {
-        return super.isEmptyValue(object) || ((String) object).isEmpty();
+    public StringSchema required() {
+        this.isRequired = true;
+        return this;
+    }
+
+    public StringSchema minLength(int addedMinLength) {
+        Predicate<Object> predicate = o -> {
+            String string = o.toString();
+            return string.length() >= addedMinLength;
+        };
+        this.addPredicate("minLength", predicate);
+        return this;
+    }
+
+    public StringSchema contains(String addedRequiredString) {
+        Predicate<Object> predicate = o -> o.toString().contains(addedRequiredString);
+        addPredicate("contains", predicate);
+        return this;
     }
 }

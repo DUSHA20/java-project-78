@@ -1,20 +1,27 @@
 package hexlet.code.schemas;
 
+import java.util.function.Predicate;
+
 public final class NumberSchema extends BaseSchema {
 
+    public NumberSchema() {
+        this.addPredicate("isRequired", o -> o instanceof Integer);
+    }
 
+    @Override
     public NumberSchema required() {
-        setRequired(true);
+        this.isRequired = true;
         return this;
     }
 
     public NumberSchema positive() {
-        addPredicate(i -> i instanceof Integer && ((Integer) i) > 0);
+        this.addPredicate("positive",  o -> o == null || (int) o > 0);
         return this;
     }
 
-    public NumberSchema range(int a, int b) {
-        addPredicate(i -> i instanceof Integer && (((Integer) i) >= a && ((Integer) i) <= b));
+    public NumberSchema range(int lowest, int highest) {
+        Predicate<Object> predicate = o -> ((int) o >= lowest) && ((int) o <= highest);
+        this.addPredicate("range", predicate);
         return this;
     }
 }

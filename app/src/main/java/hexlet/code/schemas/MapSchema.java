@@ -1,48 +1,37 @@
 package hexlet.code.schemas;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema {
 
-    private Map<String, BaseSchema> schemas = new HashMap<>();
-
-    public MapSchema required() {
-        setRequired(true);
-        return this;
+    public MapSchema() {
+        this.addPredicate("isRequired", o -> o instanceof Map<?, ?>);
     }
-
-    public MapSchema sizeof(int x) {
-        addPredicate(m -> ((Map<?, ?>) m).size() == x);
-        return this;
-    }
-
-    public MapSchema shape(Map<String, BaseSchema> innerSchemas) {
-        this.schemas = innerSchemas;
-        return this;
-    }
-
-    public boolean innerCheck(Map<Object, Object> objectMap) {
-        for (Map.Entry<?, ?> entry : objectMap.entrySet()) {
-            var key = entry.getKey();
-            var value = entry.getValue();
-            if (schemas.containsKey(key)) {
-                BaseSchema sce = schemas.get(key);
-                if (!sce.isValid(value)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     @Override
-    public boolean isValid(Object object) {
-        if (object != null && !schemas.isEmpty() && object instanceof Map) {
-            return innerCheck((Map<Object, Object>) object);
-        } else {
-            return super.isValid(object);
-        }
+    public MapSchema required() {
+        this.isRequired = true;
+        return this;
+    }
+
+    public MapSchema sizeof(int sizeRequirement) {
+        Predicate<Object> predicate = o -> {
+            Map<Object, Object> map = (Map<Object, Object>) o;
+            return map.size() == sizeRequirement;
+        };
+        this.addPredicate("sizeof", predicate);
+        return this;
+    }
+
+    public MapSchema shape(Map<String, BaseSchema> schema) {
+        Predicate<Object> predicate = o -> {
+            return schema.keySet()
+                    .stream()
+                    .allMatch(k -> schema.get(k).isValid(((Map) o).get(k)));
+
+        };
+        this.addPredicate("shape", predicate);
+        return this;
     }
 }
 
