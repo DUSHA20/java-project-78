@@ -20,7 +20,12 @@ public final class NumberSchema<T extends Number> extends BaseSchema<T> {
     }
 
     public NumberSchema<T> range(T lowest, T highest) {
-        Predicate<T> predicate = o -> o.doubleValue() >= lowest.doubleValue() && o.doubleValue() <= highest.doubleValue();
+        Predicate<T> predicate = o -> {
+            double value = o.doubleValue();
+            double lowestValue = lowest.doubleValue();
+            double highestValue = highest.doubleValue();
+            return value >= lowestValue && value <= highestValue;
+        };
         this.addPredicate("range", predicate);
         return this;
     }
