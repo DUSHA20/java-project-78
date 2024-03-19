@@ -4,7 +4,6 @@ public final class StringSchema extends BaseSchema {
 
     public StringSchema() {
         super();
-        // Add a predicate to check if the object is a String
         addPredicate(s -> s instanceof String);
     }
 

@@ -13,7 +13,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema sizeof(int x) {
-        addPredicate(m -> ((Map) m).size() == x);
+        addPredicate(m -> ((Map<?, ?>) m).size() == x);
         return this;
     }
 
@@ -23,8 +23,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public boolean innerCheck(Map<Object, Object> objectMap) {
-
-        for (Map.Entry entry : objectMap.entrySet()) {
+        for (Map.Entry<?, ?> entry : objectMap.entrySet()) {
             var key = entry.getKey();
             var value = entry.getValue();
             if (schemas.containsKey(key)) {
@@ -39,9 +38,8 @@ public final class MapSchema extends BaseSchema {
 
     @Override
     public boolean isValid(Object object) {
-
-        if (object != null && !schemas.isEmpty()) {
-            return innerCheck((Map) object);
+        if (object != null && !schemas.isEmpty() && object instanceof Map) {
+            return innerCheck((Map<Object, Object>) object);
         } else {
             return super.isValid(object);
         }
