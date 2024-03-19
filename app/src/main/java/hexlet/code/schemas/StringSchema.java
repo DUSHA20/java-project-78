@@ -27,4 +27,10 @@ public final class StringSchema extends BaseSchema<Object> {
         addPredicate("contains", predicate);
         return this;
     }
+
+    public StringSchema containsSubstring(String substring) {
+        Predicate<Object> predicate = o -> o instanceof String && ((String) o).contains(substring);
+        addPredicate("containsSubstring", predicate);
+        return this;
+    }
 }
