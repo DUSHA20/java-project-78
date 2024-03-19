@@ -3,17 +3,17 @@ package hexlet.code.schemas;
 import java.util.LinkedHashMap;
 import java.util.function.Predicate;
 
-public abstract class BaseSchema {
+public abstract class BaseSchema<T> {
     protected boolean isRequired = false;
-    protected LinkedHashMap<String, Predicate> predicates = new LinkedHashMap<>();
+    protected LinkedHashMap<String, Predicate<T>> predicates = new LinkedHashMap<>();
 
-    protected final void addPredicate(String name, Predicate predicate) {
+    protected final void addPredicate(String name, Predicate<T> predicate) {
         this.predicates.put(name, predicate);
     }
 
-    public abstract BaseSchema required();
+    public abstract BaseSchema<T> required();
 
-    public final boolean isValid(Object obj) {
+    public final boolean isValid(T obj) {
         if (obj == null || obj.equals("")) {
             return !isRequired;
         }

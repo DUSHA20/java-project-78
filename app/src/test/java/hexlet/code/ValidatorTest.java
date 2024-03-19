@@ -17,7 +17,7 @@ public class ValidatorTest {
     @Test
     void numberSchemaTest() {
         Validator v = new Validator();
-        NumberSchema schema = v.number();
+        NumberSchema<Integer> schema = v.number();
 
         assertTrue(schema.isValid(null));
         assertTrue(schema.positive().isValid(null));
@@ -36,8 +36,6 @@ public class ValidatorTest {
         assertTrue(schema.isValid(8));
         assertFalse(schema.isValid(4));
         assertFalse(schema.isValid(11));
-        assertFalse(schema.isValid("x"));
-
     }
 
     @Test
@@ -66,7 +64,7 @@ public class ValidatorTest {
     @Test
     public void testMapSchema() {
         Validator v = new Validator();
-        MapSchema schema = v.map();
+        MapSchema<String, String> schema = v.map();
 
         assertTrue(schema.isValid(null));
         schema.required();
@@ -85,10 +83,11 @@ public class ValidatorTest {
     @Test
     public void testShape() {
         Validator v = new Validator();
-        MapSchema schema = v.map();
-        Map<String, BaseSchema> schemas = new HashMap<>();
+        MapSchema<String, Object> schema = v.map();
+        Map<String, BaseSchema<Object>> schemas = new HashMap<>();
 
-        schemas.put("name", v.string().required());
+        BaseSchema<Object> nameSchema = new StringSchema().required();
+        schemas.put("name", nameSchema);
         schemas.put("age", v.number().positive());
 
         schema.shape(schemas);
