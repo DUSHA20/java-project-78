@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hexlet.code.ValidatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-03-19T16:25:46" hostname="MacBook-Pro-Dusia.local" time="0.035">
+<testsuite name="hexlet.code.ValidatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-03-19T16:29:52" hostname="MacBook-Pro-Dusia.local" time="0.07">
   <properties/>
-  <testcase name="testShape()" classname="hexlet.code.ValidatorTest" time="0.027"/>
-  <testcase name="stringSchemaTest()" classname="hexlet.code.ValidatorTest" time="0.001"/>
-  <testcase name="numberSchemaTest()" classname="hexlet.code.ValidatorTest" time="0.001"/>
+  <testcase name="testShape()" classname="hexlet.code.ValidatorTest" time="0.059"/>
+  <testcase name="stringSchemaTest()" classname="hexlet.code.ValidatorTest" time="0.002"/>
+  <testcase name="numberSchemaTest()" classname="hexlet.code.ValidatorTest" time="0.002"/>
   <testcase name="testMapSchema()" classname="hexlet.code.ValidatorTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
