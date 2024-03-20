@@ -8,6 +8,7 @@ import hexlet.code.schemas.MapSchema;
  * This class can be extended to add custom validation methods.
  */
 public class Validator {
+
     /**
      * Returns a new StringSchema instance.
      * @return StringSchema instance.
@@ -15,7 +16,6 @@ public class Validator {
     public StringSchema string() {
         return new StringSchema();
     }
-
     /**
      * Returns a new NumberSchema instance.
      * @return NumberSchema instance.
@@ -23,12 +23,12 @@ public class Validator {
     public NumberSchema number() {
         return new NumberSchema();
     }
-    
     /**
      * Returns a new MapSchema instance.
      * @return MapSchema instance.
      */
     public MapSchema map() {
-        return new MapSchema(); }
+        return new MapSchema();
+    }
 }
 
