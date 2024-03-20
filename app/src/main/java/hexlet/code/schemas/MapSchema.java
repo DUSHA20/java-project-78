@@ -21,13 +21,13 @@ public final class MapSchema<K, V> extends BaseSchema<Map<K, V>> {
         return this;
     }
 
-    public MapSchema<K, V> shape(Map<String, ? extends BaseSchema<Object>> schema) {
+    public MapSchema<K, V> shape(Map<String, ? extends BaseSchema<String>> schema) {
         Predicate<Map<K, V>> predicate = o -> schema.entrySet()
                 .stream()
                 .allMatch(entry -> {
-                    BaseSchema<Object> baseSchema = entry.getValue();
+                    BaseSchema<String> baseSchema = entry.getValue();
                     Object value = o.get(entry.getKey());
-                    return value == null || (value != null && baseSchema.isValid(value));
+                    return value == null || (value != null && baseSchema.isValid((String) value));
                 });
         this.addPredicate("shape", predicate);
         return this;
