@@ -3,7 +3,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id 'java'
-    id 'application'
     id 'jacoco'
     id 'checkstyle'
     id 'io.freefair.lombok' version '8.4'
@@ -13,10 +12,6 @@ plugins {
 
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
-
-application {
-    mainClassName = 'hexlet.code.App'
-}
 
 repositories {
     mavenCentral()
