@@ -17,7 +17,7 @@ public class ValidatorTest {
     @Test
     void numberSchemaTest() {
         Validator v = new Validator();
-        NumberSchema<Integer> schema = v.number();
+        NumberSchema schema = v.number();
 
         assertTrue(schema.isValid(null));
         assertTrue(schema.positive().isValid(null));
