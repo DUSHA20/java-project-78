@@ -84,7 +84,7 @@ public class ValidatorTest {
     public void testShape() {
         Validator v = new Validator();
         MapSchema<String, Object> schema = v.map();
-        Map<String, BaseSchema<String>> schemas = new HashMap<>();
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
 
         BaseSchema<String> firstNameSchema = v.string().required().contains("ya");
         BaseSchema<String> lastNameSchema = v.string().required().contains("ov");
